@@ -12,10 +12,14 @@ public class Ludoteca implements Iterator<Jogo> {
         this.index = 0;
     }
 
+    public List<Jogo> getJogos() {
+        return jogos;
+    }
+
     public boolean addJogo(Jogo jogo) {
         if (jogo != null) {
             jogos.add(jogo);
-            contador++;
+            contador++;;
             return true;
         }
         return false;

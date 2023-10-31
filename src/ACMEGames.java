@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 public class ACMEGames {
 
-    Ludoteca ludoteca = new Ludoteca();
+    Ludoteca ludoteca;
     Scanner scanner = new Scanner(System.in);
 
     public ACMEGames() {
+        this.ludoteca = new Ludoteca();
     }
 
     public void executa() {
@@ -18,8 +19,8 @@ public class ACMEGames {
             mostrarDadosJogo();
             mostrarDadosPorAnoJogo();
 //          mostrarDadoJogoEletronicoPorCategoria();
-//            mostrarSomatorioPrecoFinalJogos();
-//          mostrarDadosJogoTabuleiroMaiorPrecoFinal();
+            mostrarSomatorioPrecoFinalJogos();
+//            mostrarDadosJogoTabuleiroMaiorPrecoFinal();
             exibirMenu();
             line = scanner.nextInt();
             scanner.nextLine();
@@ -122,9 +123,8 @@ public class ACMEGames {
     private void mostrarDadosJogo() {
         System.out.println("=== Mostrar Dados de um Jogo ===");
         System.out.print("Nome do Jogo: ");
-        String nome = scanner.nextLine();
+        String nome = scanner.next();
 
-        Ludoteca ludoteca = new Ludoteca();
         Jogo jogo = ludoteca.consultaPorNome(nome);
 
         if (jogo != null) {
@@ -138,7 +138,6 @@ public class ACMEGames {
         System.out.println("=== Mostrar Dados de um Jogo pelo ano ===");
         System.out.print("Ano do Jogo: ");
         int ano = scanner.nextInt();
-        Ludoteca ludoteca = new Ludoteca();
         List<Jogo> jogosDoAno = ludoteca.consultaPorAno(ano);
 
         if (jogosDoAno.isEmpty()) {
@@ -150,20 +149,48 @@ public class ACMEGames {
         }
     }
 
-//    public void mostrarSomatorioPrecoFinalJogos() {
-//        System.out.println("=== Mostrar Somatório do Preço Final dos Jogos ===");
+//    public void  mostrarDadosJogoEletronicoPorCategoria(){
+//        System.out.println("=== Mostrar dados de jogo por categoria ===");
+//        System.out.println("Categoria do jogo: ");
+//
+//        JogoEletronico jogoEletronico = new JogoEletronico(nome, ano, precoBase, plataforma, categoria);
+//
+//    }
+
+    public void mostrarSomatorioPrecoFinalJogos() {
+        System.out.println("=== Mostrar somatório do preço final dos jogos ===");
+        List<Jogo> jogos = ludoteca.getJogos();
+        if (jogos.isEmpty()) {
+            System.out.println("6:Nenhum jogo encontrado.");
+        } else {
+            double somatorio = 0;
+            for (Jogo jogo : jogos) {
+                somatorio += jogo.calculaPrecoFinal();
+            }
+            System.out.println("6:" + somatorio);
+        }
+    }
+
+//    public void  mostrarDadosJogoTabuleiroMaiorPrecoFinal(){
+//        System.out.println("=== Jogo de tabuleiro com maior preço final ===");
+//        List<Jogo> jogos = ludoteca.getJogos();
 //        if (jogos.isEmpty()) {
-//            System.out.println("6:Nenhum jogo encontrado.");
-//        } else {
+//            System.out.println("7:Nenhum jogo encontrado.");
+//        }else{
 //            double somatorio = 0;
 //            for (Jogo jogo : jogos) {
 //                somatorio += jogo.calculaPrecoFinal();
 //            }
-//            System.out.println("6:Somatório do preço final dos jogos: " + somatorio);
+//            System.out.println("7:");
 //        }
-//    }
+//        Mostrar os dados do jogo de tabuleiro com maior preço final: localiza o jogo
+//        de tabuleiro cadastrado com maior preço final.
+//                Se existir, mostra os dados do jogo no formato: 7:nome,preço final
 
 }
+
+
+
 
 
 
