@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class ACMEGames {
     private List<Jogo> jogos;
+    Ludoteca ludoteca = new Ludoteca();
     Scanner scanner = new Scanner(System.in);
 
     public ACMEGames() {
@@ -14,6 +15,13 @@ public class ACMEGames {
     public void executa() {
         int line;
         do {
+            cadastrarJogosEletronicos();
+            cadastrarJogosTabuleiro();
+            mostrarDadosJogo();
+            mostrarDadosPorAnoJogo();
+//          mostrarDadoJogoEletronicoPorCategoria();
+            mostrarSomatorioPrecoFinalJogos();
+//          mostrarDadosJogoTabuleiroMaiorPrecoFinal();
             exibirMenu();
             line = scanner.nextInt();
             scanner.nextLine();
@@ -25,26 +33,12 @@ public class ACMEGames {
                 case 2:
                     cadastrarJogosTabuleiro();
                     break;
-                case 3:
-                    mostrarDadosJogo();
-                    break;
-                case 4:
-//                    mostrarDadosPorAnoJogo();
-                    break;
-                case 5:
-//                    mostrarDadoJogoEletronicoPorCategoria();
-                    break;
-                case 6:
-//                    mostrarSomatorioPrecoFinalJogos();
-                    break;
-                case 7:
-//                    MostrarDadosJogoTabuleiroMaiorPrecoFinal();
-                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
+                    exibirMenu();
             }
         } while (line != 0);
 
@@ -67,6 +61,10 @@ public class ACMEGames {
             if ("-1".equals(nome)) {
                 break;
             }
+            if (ludoteca.consultaPorNome(nome) != null) {
+                System.out.println("1:Erro-jogo com nome repetido: " + nome);
+                continue;
+            }
 
             System.out.println("Ano: ");
             int ano = scanner.nextInt();
@@ -82,27 +80,13 @@ public class ACMEGames {
             Categoria categoria = Categoria.valueOf(categorias);
 
             JogoEletronico jogoEletronico = new JogoEletronico(nome, ano, precoBase, plataforma, categoria);
-
-            if (!existeJogo(nome)) {
-                jogos.add(jogoEletronico);
+            if (ludoteca.addJogo(jogoEletronico)) {
                 System.out.println("1:" + jogoEletronico.getNome() + "," + jogoEletronico.calculaPrecoFinal());
-            } else {
-                System.out.println("1:Erro-jogo com nome repetido: " + jogoEletronico.getNome());
             }
-
         }
     }
 
-    private boolean existeJogo(String nome) {
-        for (Jogo jogo : jogos) {
-            if (jogo.getNome().equals(nome)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void cadastrarJogosTabuleiro(){
+    private void cadastrarJogosTabuleiro() {
         System.out.println("=== Cadastrar jogo de tabuleiro ===");
 
         while (true) {
@@ -112,6 +96,10 @@ public class ACMEGames {
 
             if ("-1".equals(nome)) {
                 break;
+            }
+            if (ludoteca.consultaPorNome(nome) != null) {
+                System.out.println("1:Erro-jogo com nome repetido: " + nome);
+                continue;
             }
 
             System.out.print("Ano: ");
@@ -123,34 +111,62 @@ public class ACMEGames {
             System.out.print("Numero de peças: ");
             int numeroPecas = scanner.nextInt();
 
-
             JogoTabuleiro jogoTabuleiro = new JogoTabuleiro(nome, ano, precoBase, numeroPecas);
-
-            if (!existeJogo(nome)) {
-                jogos.add(jogoTabuleiro);
+            if (ludoteca.addJogo(jogoTabuleiro)) {
                 System.out.println("1:" + jogoTabuleiro.getNome() + "," + jogoTabuleiro.calculaPrecoFinal());
-            } else {
-                System.out.println("1:Erro-jogo com nome repetido: " + jogoTabuleiro.getNome());
             }
 
         }
     }
+
     private void mostrarDadosJogo() {
         System.out.println("=== Mostrar Dados de um Jogo ===");
         System.out.print("Nome do Jogo: ");
         String nome = scanner.nextLine();
+        Ludoteca ludoteca = new Ludoteca();
+        Jogo jogo = ludoteca.consultaPorNome(nome);
 
-        for (Jogo jogo : jogos) {
-            if (jogo.getNome().equals(nome)) {
-                System.out.println("3:" + jogo.getNome() + "," + jogo.getPrecoBase() + "," + jogo.getAno() + jogo.calculaPrecoFinal());
-                return;
-            }
+        if (jogo != null) {
+            System.out.println("3:" + jogo.getNome() + "," + jogo.getPrecoBase() + "," + jogo.getAno() + "," + jogo.calculaPrecoFinal());
+        } else {
+            System.out.println("3:Nome inexistente.");
         }
-        System.out.println("3:Nome inexistente.");
     }
 
+    public void mostrarDadosPorAnoJogo() {
+        System.out.println("=== Mostrar Dados de um Jogo pelo ano ===");
+        System.out.print("Ano do Jogo: ");
+        int ano = scanner.nextInt();
+        Ludoteca ludoteca = new Ludoteca();
+        List<Jogo> jogosDoAno = ludoteca.consultaPorAno(ano);
+
+        if (jogosDoAno.isEmpty()) {
+            System.out.println("4; Ano inexistente");
+        } else {
+            for (Jogo jogo : jogosDoAno) {
+                System.out.println("4:" + jogo.getNome() + "," + jogo.getPrecoBase() + "," + jogo.getAno() + "," + jogo.calculaPrecoFinal());
+            }
+        }
+    }
+
+    public void mostrarSomatorioPrecoFinalJogos() {
+        System.out.println("=== Mostrar Somatório do Preço Final dos Jogos ===");
+        if (jogos.isEmpty()) {
+            System.out.println("6:Nenhum jogo encontrado.");
+        } else {
+            double somatorio = 0;
+            for (Jogo jogo : jogos) {
+                somatorio += jogo.calculaPrecoFinal();
+            }
+            System.out.println("6:Somatório do preço final dos jogos: " + somatorio);
+        }
+    }
 
 }
+
+
+
+
 
 
 

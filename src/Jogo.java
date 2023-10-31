@@ -20,4 +20,5 @@ public abstract class Jogo {
     public int getAno(){
         return ano;
     }
+
 }
