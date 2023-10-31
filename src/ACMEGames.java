@@ -1,15 +1,13 @@
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ACMEGames {
-    private List<Jogo> jogos;
+
     Ludoteca ludoteca = new Ludoteca();
     Scanner scanner = new Scanner(System.in);
 
     public ACMEGames() {
-        this.jogos = new ArrayList<>();
     }
 
     public void executa() {
@@ -20,7 +18,7 @@ public class ACMEGames {
             mostrarDadosJogo();
             mostrarDadosPorAnoJogo();
 //          mostrarDadoJogoEletronicoPorCategoria();
-            mostrarSomatorioPrecoFinalJogos();
+//            mostrarSomatorioPrecoFinalJogos();
 //          mostrarDadosJogoTabuleiroMaiorPrecoFinal();
             exibirMenu();
             line = scanner.nextInt();
@@ -92,11 +90,11 @@ public class ACMEGames {
         while (true) {
             System.out.println("Nome (ou -1 para sair): ");
             String nome = scanner.next();
-            scanner.nextLine();
 
             if ("-1".equals(nome)) {
                 break;
             }
+
             if (ludoteca.consultaPorNome(nome) != null) {
                 System.out.println("1:Erro-jogo com nome repetido: " + nome);
                 continue;
@@ -104,6 +102,7 @@ public class ACMEGames {
 
             System.out.print("Ano: ");
             int ano = scanner.nextInt();
+            scanner.nextLine();
 
             System.out.print("Preço base: ");
             double precoBase = scanner.nextDouble();
@@ -112,17 +111,19 @@ public class ACMEGames {
             int numeroPecas = scanner.nextInt();
 
             JogoTabuleiro jogoTabuleiro = new JogoTabuleiro(nome, ano, precoBase, numeroPecas);
+
             if (ludoteca.addJogo(jogoTabuleiro)) {
                 System.out.println("1:" + jogoTabuleiro.getNome() + "," + jogoTabuleiro.calculaPrecoFinal());
             }
-
         }
     }
+
 
     private void mostrarDadosJogo() {
         System.out.println("=== Mostrar Dados de um Jogo ===");
         System.out.print("Nome do Jogo: ");
         String nome = scanner.nextLine();
+
         Ludoteca ludoteca = new Ludoteca();
         Jogo jogo = ludoteca.consultaPorNome(nome);
 
@@ -149,18 +150,18 @@ public class ACMEGames {
         }
     }
 
-    public void mostrarSomatorioPrecoFinalJogos() {
-        System.out.println("=== Mostrar Somatório do Preço Final dos Jogos ===");
-        if (jogos.isEmpty()) {
-            System.out.println("6:Nenhum jogo encontrado.");
-        } else {
-            double somatorio = 0;
-            for (Jogo jogo : jogos) {
-                somatorio += jogo.calculaPrecoFinal();
-            }
-            System.out.println("6:Somatório do preço final dos jogos: " + somatorio);
-        }
-    }
+//    public void mostrarSomatorioPrecoFinalJogos() {
+//        System.out.println("=== Mostrar Somatório do Preço Final dos Jogos ===");
+//        if (jogos.isEmpty()) {
+//            System.out.println("6:Nenhum jogo encontrado.");
+//        } else {
+//            double somatorio = 0;
+//            for (Jogo jogo : jogos) {
+//                somatorio += jogo.calculaPrecoFinal();
+//            }
+//            System.out.println("6:Somatório do preço final dos jogos: " + somatorio);
+//        }
+//    }
 
 }
 

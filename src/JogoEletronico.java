@@ -26,7 +26,4 @@ public class JogoEletronico extends Jogo{
         precoFinal = Math.round(precoFinal * 100.0) / 100.0;
         return precoFinal;
     }
-    public Categoria getCategoria(){
-        return categoria;
-    }
 }

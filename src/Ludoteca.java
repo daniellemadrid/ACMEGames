@@ -1,13 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ludoteca {
+public class Ludoteca implements Iterator<Jogo> {
     private int contador;
     private List<Jogo> jogos;
+    private int index;
 
 
     public Ludoteca() {
         this.jogos = new ArrayList<>();
+        this.index = 0;
     }
 
     public boolean addJogo(Jogo jogo) {
@@ -36,5 +38,20 @@ public class Ludoteca {
             }
         }
         return jogosDoAno;
+    }
+
+    @Override
+    public void reset() {
+        index = 0;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return index < jogos.size();
+    }
+
+    @Override
+    public Jogo next() {
+        return jogos.get(index++);
     }
 }
