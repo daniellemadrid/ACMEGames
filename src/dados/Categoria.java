@@ -8,10 +8,11 @@ public enum Categoria {
 
     private String nome;
 
-    Categoria(String nome){
+    Categoria(String nome) {
         this.nome = nome;
     }
-    public String getNome(){
+
+    public String getNome() {
         return nome;
     }
 }

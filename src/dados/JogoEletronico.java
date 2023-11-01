@@ -1,21 +1,15 @@
 package dados;
-
-import dados.Categoria;
-import dados.Jogo;
-
-import java.sql.SQLOutput;
-
 public class JogoEletronico extends Jogo {
     private String plataforma;
     private Categoria categoria;
 
-    public JogoEletronico(String nome, int ano, double precoBase, String plataforma, Categoria categoria){
+    public JogoEletronico(String nome, int ano, double precoBase, String plataforma, Categoria categoria) {
         super(nome, ano, precoBase);
         this.plataforma = plataforma;
         this.categoria = categoria;
     }
 
-    public Categoria getCategoria(){
+    public Categoria getCategoria() {
         return categoria;
     }
 
@@ -43,12 +37,4 @@ public class JogoEletronico extends Jogo {
         return false;
     }
 
-    @Override
-    public boolean verificaCategoria(String categoria) {
-        if (this.categoria != null && this.categoria.getNome() != null && categoria != null) {
-            return this.categoria.getNome().equals(categoria);
-        } else {
-            return false;
-        }
-    }
 }

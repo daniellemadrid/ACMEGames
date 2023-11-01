@@ -23,23 +23,25 @@ public class ACMEGames {
     public ACMEGames() {
         this.ludoteca = new Ludoteca();
         this.jogosEletronicos = new ArrayList<>();
+        lerArquivos();
+    }
+
+    private void lerArquivos() {
         try {
             BufferedReader streamEntrada = new BufferedReader(new FileReader("dadosIn.txt"));
             entrada = new Scanner(streamEntrada);
             saidaPadrao = new PrintStream(new File("dadosOut.txt"), Charset.forName("UTF-8"));
             scanner = new Scanner(System.in);
-
         } catch (Exception e) {
-            System.out.println("problema de leitura de arquivo" + e);
+            System.out.println("Houve um problema ao ler o arquivo" + e.getMessage());
         }
     }
-
     public void executa() {
         int choice;
         do {
             exibirMenu();
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -63,11 +65,14 @@ public class ACMEGames {
                 case 7:
                     mostrarDadosJogoTabuleiroMaiorPrecoFinal();
                     break;
+                case 8:
+                    mostrarDadosJogoTabuleiroMaisAntigo();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("Opção inválida, tente novamente.");
             }
         } while (choice != 0);
     }
@@ -81,8 +86,8 @@ public class ACMEGames {
         System.out.println("[5] Mostrar dados de jogo por categoria");
         System.out.println("[6] Mostrar somatório do preço final dos jogos");
         System.out.println("[7] Jogo de tabuleiro com maior preço final");
+        System.out.println("[8] Mostrar dados do jogo de tabuleiro mais antigo");
         System.out.println("[0] Sair do sistema");
-        System.out.print("Escolha uma opção: ");
     }
 
     private void cadastrarJogosEletronicos() {
@@ -90,7 +95,7 @@ public class ACMEGames {
 
         while (true) {
             System.out.println("Nome (ou -1 para sair): ");
-            String nome = scanner.nextLine();
+            String nome = scanner.next();
 
             if ("-1".equals(nome)) {
                 break;
@@ -107,10 +112,10 @@ public class ACMEGames {
             double precoBase = scanner.nextDouble();
 
             System.out.print("Plataforma: ");
-            String plataforma = scanner.nextLine();
+            String plataforma = scanner.next();
 
             System.out.print("Categoria (ACAO, SIMULACAO, ESTRATEGIA): ");
-            String categorias = scanner.nextLine();
+            String categorias = scanner.next();
             Categoria categoria = Categoria.valueOf(categorias);
 
             JogoEletronico jogoEletronico = new JogoEletronico(nome, ano, precoBase, plataforma, categoria);
@@ -163,7 +168,7 @@ public class ACMEGames {
         Jogo jogo = ludoteca.consultaPorNome(nome);
 
         if (jogo != null) {
-            System.out.println("3:" + jogo.getNome() + "," + jogo.getPrecoBase() + "," + jogo.getAno() + "," + jogo.calculaPrecoFinal());
+            System.out.println("3:" + jogo.getNome() + "," + jogo.getPrecoBase() + "," + jogo.getAno() + jogo.calculaPrecoFinal());
         } else {
             System.out.println("3:Nome inexistente.");
         }
@@ -196,11 +201,7 @@ public class ACMEGames {
 
             if (match) {
                 found = true;
-                System.out.println("===========================");
-                System.out.println("Nome: " + jogo.getNome());
-                System.out.println("Ano: " + jogo.getAno());
-                System.out.println("Preço Final: " + jogo.calculaPrecoFinal());
-                System.out.println("===========================");
+                System.out.println("6:" + jogo.getNome() + "," + jogo.getAno() + "," + jogo.calculaPrecoFinal());
             }
         }
 
@@ -215,11 +216,11 @@ public class ACMEGames {
         if (jogos.isEmpty()) {
             System.out.println("6:Nenhum jogo encontrado.");
         } else {
-            double somatorio = 0;
+            double somatorio = 0.0;
             for (Jogo jogo : jogos) {
                 somatorio += jogo.calculaPrecoFinal();
             }
-            System.out.println("6:" + somatorio);
+            System.out.println("6:valor do somatório " + somatorio);
         }
     }
 
@@ -254,6 +255,32 @@ public class ACMEGames {
         }
 
     }
+
+    public void mostrarDadosJogoTabuleiroMaisAntigo() {
+        System.out.println("=== Mostrar dados do jogo de tabuleiro mais antigo ===");
+        List<Jogo> jogos = ludoteca.getJogos();
+        if (jogos.isEmpty()) {
+            System.out.println("9:Nenhum jogo encontrado.");
+        } else {
+            Jogo jogoMaisAntigo = jogos.get(0);
+            int anoMaisAntigo = jogoMaisAntigo.getAno();
+
+            for (Jogo jogo : jogos) {
+                if (jogo.isJogoTabuleiro() && jogo.getAno() < anoMaisAntigo) {
+                    anoMaisAntigo = jogo.getAno();
+                    jogoMaisAntigo = jogo;
+                }
+            }
+
+            if (anoMaisAntigo == jogoMaisAntigo.getAno()) {
+                System.out.println("9:" + jogoMaisAntigo.getNome() + "," + jogoMaisAntigo.getAno());
+            } else {
+                System.out.println("9:Todos os jogos têm o mesmo ano.");
+            }
+        }
+    }
+
+
 }
 
 

@@ -21,7 +21,7 @@ public class Ludoteca implements Iterator<Jogo> {
     public boolean addJogo(Jogo jogo) {
         if (jogo != null) {
             jogos.add(jogo);
-            contador++;;
+            contador++;
             return true;
         }
         return false;
