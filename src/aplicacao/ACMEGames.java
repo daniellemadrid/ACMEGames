@@ -21,9 +21,10 @@ public class ACMEGames {
     public ACMEGames() {
         this.ludoteca = new Ludoteca();
         try {
-            BufferedReader streamEntrada = new BufferedReader(new FileReader("src/aplicacao/Input.txt"));
+            BufferedReader streamEntrada = new BufferedReader(new FileReader("dadosIn.txt"));
             entrada = new Scanner(streamEntrada);
-            PrintStream streamSaida = new PrintStream(new File("src/aplicacao/Output.txt"), Charset.forName("UTF-8"));
+            PrintStream streamSaida = new PrintStream(new File("dadosOut.txt"), Charset.forName("UTF-8"));
+
         } catch (Exception e) {
             System.out.println(e);
         }
