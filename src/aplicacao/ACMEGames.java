@@ -38,12 +38,12 @@ public class ACMEGames {
         int line;
         do {
             cadastrarJogosEletronicos();
-            cadastrarJogosTabuleiro();
-            mostrarDadosJogo();
-            mostrarDadosPorAnoJogo();
-            mostrarDadosJogoEletronicoPorCategoria();
-            mostrarSomatorioPrecoFinalJogos();
-            mostrarDadosJogoTabuleiroMaiorPrecoFinal();
+          //  cadastrarJogosTabuleiro();
+          //  mostrarDadosJogo();
+          //  mostrarDadosPorAnoJogo();
+           mostrarDadosJogoEletronicoPorCategoria();
+          //  mostrarSomatorioPrecoFinalJogos();
+          //  mostrarDadosJogoTabuleiroMaiorPrecoFinal();
             exibirMenu();
             line = scanner.nextInt();
             scanner.nextLine();
@@ -97,7 +97,7 @@ public class ACMEGames {
             System.out.print("Plataforma: ");
             String plataforma = scanner.nextLine();
 
-            System.out.print("dados.Categoria (ACAO, SIMULACAO, ESTRATEGIA): ");
+            System.out.print("Categoria (ACAO, SIMULACAO, ESTRATEGIA): ");
             String categorias = scanner.nextLine();
             Categoria categoria = Categoria.valueOf(categorias);
 
@@ -173,26 +173,26 @@ public class ACMEGames {
 
     public void mostrarDadosJogoEletronicoPorCategoria() {
         System.out.println("=== Mostrar dados de jogo por categoria ===");
-        System.out.println("Categoria do jogo: ");
+        System.out.print("Categoria do jogo: ");
         String categoria = scanner.next();
 
-        boolean categoriaExiste = false;
-        boolean jogoEncontrado = false;
+        boolean found = false;
 
-        for (JogoEletronico jogo : jogosEletronicos)
-            if (categoria.equals(jogo.getCategoria().getNome())) {
-                    categoriaExiste = true;
-                    jogoEncontrado = true;
-                    System.out.println("5:" + jogo.getNome() + "," + jogo.getAno() + jogo.calculaPrecoFinal());
-                }
+        for (JogoEletronico jogo : jogosEletronicos) {
+            boolean matchesCategory = jogo.verificaCategoria(categoria);
+            if (matchesCategory) {
+                found = true;
+                System.out.println("Nome: " + jogo.getNome());
+                System.out.println("Ano: " + jogo.getAno());
+                System.out.println("Preço Final: " + jogo.calculaPrecoFinal());
 
-        if (!categoriaExiste) {
-            System.out.println("5:Categoria inexistente.");
-        } else if (!jogoEncontrado) {
-            System.out.println("5:Nenhum jogo encontrado.");
+            }
+        }
+
+        if (!found) {
+            System.out.println("Nenhum jogo encontrado. Tente novamente e verifique o nome e a categoria.");
         }
     }
-
 
     public void mostrarSomatorioPrecoFinalJogos() {
         System.out.println("=== Mostrar somatório do preço final dos jogos ===");

@@ -3,6 +3,8 @@ package dados;
 import dados.Categoria;
 import dados.Jogo;
 
+import java.sql.SQLOutput;
+
 public class JogoEletronico extends Jogo {
     private String plataforma;
     private Categoria categoria;
@@ -39,5 +41,10 @@ public class JogoEletronico extends Jogo {
     @Override
     public boolean isJogoTabuleiro() {
         return false;
+    }
+
+    @Override
+    public boolean verificaCategoria(String categoria) {
+        return categoria.equals(this.categoria.toString());
     }
 }

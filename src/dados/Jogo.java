@@ -13,6 +13,7 @@ public abstract class Jogo {
 
     public abstract double calculaPrecoFinal();
     public abstract boolean isJogoTabuleiro();
+    public abstract boolean verificaCategoria(String categoria);
 
     public double getPrecoBase() {
         return precoBase;

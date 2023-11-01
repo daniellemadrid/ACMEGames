@@ -18,4 +18,9 @@ public class JogoTabuleiro extends Jogo {
     public boolean isJogoTabuleiro() {
         return true;
     }
+
+    @Override
+    public boolean verificaCategoria(String categoria) {
+        return false;
+    }
 }
