@@ -1,4 +1,4 @@
-package repository;
+package dados;
 
 public interface Iterator<T> {
     void reset();

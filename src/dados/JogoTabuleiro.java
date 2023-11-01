@@ -1,4 +1,6 @@
-package model;
+package dados;
+
+import dados.Jogo;
 
 public class JogoTabuleiro extends Jogo {
     private int numeroPecas;

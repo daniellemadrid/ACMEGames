@@ -1,4 +1,4 @@
-package model;
+package dados;
 
 public abstract class Jogo {
     private String nome;

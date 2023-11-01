@@ -1,4 +1,4 @@
-package enums;
+package dados;
 
 public enum Categoria {
     ACT("ACAO"),

@@ -1,6 +1,7 @@
-package model;
+package dados;
 
-import enums.Categoria;
+import dados.Categoria;
+import dados.Jogo;
 
 public class JogoEletronico extends Jogo {
     private String plataforma;

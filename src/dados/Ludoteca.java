@@ -1,7 +1,7 @@
-package service;
+package dados;
 
-import repository.Iterator;
-import model.Jogo;
+import dados.Iterator;
+import dados.Jogo;
 
 import java.util.ArrayList;
 import java.util.List;
