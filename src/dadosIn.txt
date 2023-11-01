@@ -1,11 +1,5 @@
-Civilization V;2014;188.98;STR
-God of War Ragnarok;2022;215.14;ACT
-The Sims 4;2014;55.03;SIM
-Super Mario Odyssey;2017;289.89;ACT
--1
-Jogo da Vida;1970;121.34;21
-Xadrez;2023;15700.56;12
--1
-Jogo da Vida
-2014
+Civilization V;2014;188.98;XBOX;STR
+God of War Ragnarok;2022;215.14;XBOX;ACT
+The Sims 4;2014;55.03;XBOX;SIM
+Super Mario Odyssey;2017;289.89;XBOX;ACT
 

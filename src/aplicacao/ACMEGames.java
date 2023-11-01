@@ -8,8 +8,10 @@ import dados.Ludoteca;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ACMEGames {
@@ -30,12 +32,17 @@ public class ACMEGames {
         try {
             BufferedReader streamEntrada = new BufferedReader(new FileReader("dadosIn.txt"));
             entrada = new Scanner(streamEntrada);
-            saidaPadrao = new PrintStream(new File("dadosOut.txt"), Charset.forName("UTF-8"));
-            scanner = new Scanner(System.in);
+            entrada.useDelimiter("[;\n\r]");
+            PrintStream streamSaida = new PrintStream(new File("dadosOut.txt"), StandardCharsets.UTF_8);
+            System.setOut(streamSaida);
+
         } catch (Exception e) {
-            System.out.println("Houve um problema ao ler o arquivo" + e.getMessage());
+            System.out.println("Ocorreu um erro: " + e.getMessage());
         }
+        Locale.setDefault(Locale.ENGLISH);
+        entrada.useLocale(Locale.ENGLISH);
     }
+
     public void executa() {
         int choice;
         do {
