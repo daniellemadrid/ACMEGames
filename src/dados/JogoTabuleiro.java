@@ -14,4 +14,8 @@ public class JogoTabuleiro extends Jogo {
     public double calculaPrecoFinal() {
         return getPrecoBase() + (getPrecoBase() * 0.01 * numeroPecas);
     }
+    @Override
+    public boolean isJogoTabuleiro() {
+        return true;
+    }
 }

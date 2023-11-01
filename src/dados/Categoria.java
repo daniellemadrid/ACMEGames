@@ -1,10 +1,10 @@
 package dados;
 
 public enum Categoria {
-    ACT("ACAO"),
-    STR("ESTRATEGIA"),
+    ACAO("ACT"),
+    ESTRATEGIA("STR"),
 
-    SIM("SIMULACAO");
+    SIMULACAO("SIM");
 
     private String nome;
 

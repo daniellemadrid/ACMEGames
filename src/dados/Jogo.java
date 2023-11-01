@@ -12,6 +12,7 @@ public abstract class Jogo {
     }
 
     public abstract double calculaPrecoFinal();
+    public abstract boolean isJogoTabuleiro();
 
     public double getPrecoBase() {
         return precoBase;

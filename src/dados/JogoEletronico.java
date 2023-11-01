@@ -13,22 +13,31 @@ public class JogoEletronico extends Jogo {
         this.categoria = categoria;
     }
 
+    public Categoria getCategoria(){
+        return categoria;
+    }
+
     @Override
     public double calculaPrecoFinal() {
         double percentual = 0.0;
         switch (categoria) {
-            case ACT:
+            case ACAO:
                 percentual = 0.1;
                 break;
-            case SIM:
+            case SIMULACAO:
                 percentual = 0.3;
                 break;
-            case STR:
+            case ESTRATEGIA:
                 percentual = 0.7;
                 break;
         }
         double precoFinal = getPrecoBase() + (getPrecoBase() * percentual);
         precoFinal = Math.round(precoFinal * 100.0) / 100.0;
         return precoFinal;
+    }
+
+    @Override
+    public boolean isJogoTabuleiro() {
+        return false;
     }
 }

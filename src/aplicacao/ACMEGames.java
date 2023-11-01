@@ -8,6 +8,7 @@ import dados.Ludoteca;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,9 +18,11 @@ public class ACMEGames {
     Scanner scanner = new Scanner(System.in);
     private Scanner entrada = null;
     private PrintStream saidaPadrao = System.out;
+    private List<JogoEletronico> jogosEletronicos;
 
     public ACMEGames() {
         this.ludoteca = new Ludoteca();
+        this.jogosEletronicos = new ArrayList<>();
         try {
             BufferedReader streamEntrada = new BufferedReader(new FileReader("dadosIn.txt"));
             entrada = new Scanner(streamEntrada);
@@ -27,29 +30,30 @@ public class ACMEGames {
             scanner = new Scanner(System.in);
 
         } catch (Exception e) {
-            System.out.println("problema de leitura de arquivo"+e);
+            System.out.println("problema de leitura de arquivo" + e);
         }
     }
+
     public void executa() {
         int line;
         do {
-         // mostrarDadoJogoEletronicoPorCategoria();
-//            mostrarSomatorioPrecoFinalJogos();
-        //  mostrarDadosJogoTabuleiroMaiorPrecoFinal();
-           exibirMenu();
+            cadastrarJogosEletronicos();
+            cadastrarJogosTabuleiro();
+            mostrarDadosJogo();
+            mostrarDadosPorAnoJogo();
+            mostrarDadosJogoEletronicoPorCategoria();
+            mostrarSomatorioPrecoFinalJogos();
+            mostrarDadosJogoTabuleiroMaiorPrecoFinal();
+            exibirMenu();
             line = scanner.nextInt();
             scanner.nextLine();
 
             switch (line) {
                 case 1:
                     cadastrarJogosEletronicos();
-//                    mostrarDadosJogo();
-//                    mostrarDadosPorAnoJogo();
                     break;
                 case 2:
                     cadastrarJogosTabuleiro();
-//                    mostrarDadosJogo();
-//                    mostrarDadosPorAnoJogo();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -70,7 +74,7 @@ public class ACMEGames {
     }
 
     private void cadastrarJogosEletronicos() {
-        System.out.println("=== Cadastrar dados.Jogo Eletrônico ===");
+        System.out.println("=== Cadastrar dados de jogo eletrônico ===");
 
         while (true) {
             System.out.println("Nome (ou -1 para sair): ");
@@ -93,7 +97,7 @@ public class ACMEGames {
             System.out.print("Plataforma: ");
             String plataforma = scanner.nextLine();
 
-            System.out.print("dados.Categoria (ACT, SIM, STR): ");
+            System.out.print("dados.Categoria (ACAO, SIMULACAO, ESTRATEGIA): ");
             String categorias = scanner.nextLine();
             Categoria categoria = Categoria.valueOf(categorias);
 
@@ -167,13 +171,28 @@ public class ACMEGames {
         }
     }
 
-//    public void  mostrarDadosJogoEletronicoPorCategoria(){
-//        System.out.println("=== Mostrar dados de jogo por categoria ===");
-//        System.out.println("dados.Categoria do jogo: ");
-//
-//        dados.JogoEletronico jogoEletronico = new dados.JogoEletronico(nome, ano, precoBase, plataforma, categoria);
-//
-//    }
+    public void mostrarDadosJogoEletronicoPorCategoria() {
+        System.out.println("=== Mostrar dados de jogo por categoria ===");
+        System.out.println("Categoria do jogo: ");
+        String categoria = scanner.next();
+
+        boolean categoriaExiste = false;
+        boolean jogoEncontrado = false;
+
+        for (JogoEletronico jogo : jogosEletronicos)
+            if (categoria.equals(jogo.getCategoria().getNome())) {
+                    categoriaExiste = true;
+                    jogoEncontrado = true;
+                    System.out.println("5:" + jogo.getNome() + "," + jogo.getAno() + jogo.calculaPrecoFinal());
+                }
+
+        if (!categoriaExiste) {
+            System.out.println("5:Categoria inexistente.");
+        } else if (!jogoEncontrado) {
+            System.out.println("5:Nenhum jogo encontrado.");
+        }
+    }
+
 
     public void mostrarSomatorioPrecoFinalJogos() {
         System.out.println("=== Mostrar somatório do preço final dos jogos ===");
@@ -189,22 +208,37 @@ public class ACMEGames {
         }
     }
 
-//    public void  mostrarDadosJogoTabuleiroMaiorPrecoFinal(){
-//        System.out.println("=== dados.Jogo de tabuleiro com maior preço final ===");
-//        List<dados.Jogo> jogos = ludoteca.getJogos();
-//        if (jogos.isEmpty()) {
-//            System.out.println("7:Nenhum jogo encontrado.");
-//        }else{
-//            double somatorio = 0;
-//            for (dados.Jogo jogo : jogos) {
-//                somatorio += jogo.calculaPrecoFinal();
-//            }
-//            System.out.println("7:");
-//        }
-//        Mostrar os dados do jogo de tabuleiro com maior preço final: localiza o jogo
-//        de tabuleiro cadastrado com maior preço final.
-//                Se existir, mostra os dados do jogo no formato: 7:nome,preço final
+    public void mostrarDadosJogoTabuleiroMaiorPrecoFinal() {
+        System.out.println("=== Jogo de tabuleiro com maior preço final ===");
+        List<Jogo> jogos = ludoteca.getJogos();
+        List<JogoTabuleiro> jogosTabuleiro = new ArrayList<>();
 
+        for (Jogo jogo : jogos) {
+            if (jogo.isJogoTabuleiro()) {
+                jogosTabuleiro.add((JogoTabuleiro) jogo);
+            }
+        }
+
+        if (jogosTabuleiro.isEmpty()) {
+            System.out.println("7:Nenhum jogo encontrado.");
+        } else {
+            double maiorPrecoFinal = Double.MIN_VALUE;
+            dados.Jogo jogoMaiorPrecoFinal = null;
+
+            for (dados.Jogo jogo : jogosTabuleiro) {
+                double precoFinal = jogo.calculaPrecoFinal();
+                if (precoFinal > maiorPrecoFinal) {
+                    maiorPrecoFinal = precoFinal;
+                    jogoMaiorPrecoFinal = jogo;
+                }
+            }
+
+            if (jogoMaiorPrecoFinal != null) {
+                System.out.println("7:" + jogoMaiorPrecoFinal.getNome() + "," + maiorPrecoFinal);
+            }
+        }
+
+    }
 }
 
 
