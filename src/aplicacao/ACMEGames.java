@@ -6,6 +6,8 @@ import dados.JogoEletronico;
 import dados.JogoTabuleiro;
 import dados.Ludoteca;
 
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,47 +15,51 @@ public class ACMEGames {
 
     Ludoteca ludoteca;
     Scanner scanner = new Scanner(System.in);
+    private Scanner entrada = null;
+    private PrintStream saidaPadrao = System.out;
 
     public ACMEGames() {
         this.ludoteca = new Ludoteca();
+        try {
+            BufferedReader streamEntrada = new BufferedReader(new FileReader("src/aplicacao/Input.txt"));
+            entrada = new Scanner(streamEntrada);
+            PrintStream streamSaida = new PrintStream(new File("src/aplicacao/Output.txt"), Charset.forName("UTF-8"));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void executa() {
-//        try (BufferedReader in = new BufferedReader(new FileReader("dadosin.txt"));
-//             BufferedWriter out = new BufferedWriter(new FileWriter("dadosout.txt"))) {
-            int line;
-            do {
-                cadastrarJogosEletronicos();
-                cadastrarJogosTabuleiro();
-                mostrarDadosJogo();
-                mostrarDadosPorAnoJogo();
-//          mostrarDadoJogoEletronicoPorCategoria();
-                mostrarSomatorioPrecoFinalJogos();
-//            mostrarDadosJogoTabuleiroMaiorPrecoFinal();
-                exibirMenu();
-                line = scanner.nextInt();
-                scanner.nextLine();
+        int line;
+        do {
+            cadastrarJogosEletronicos();
+            cadastrarJogosTabuleiro();
+            mostrarDadosJogo();
+          mostrarDadosPorAnoJogo();
+         // mostrarDadoJogoEletronicoPorCategoria();
+            mostrarSomatorioPrecoFinalJogos();
+        //  mostrarDadosJogoTabuleiroMaiorPrecoFinal();
+            exibirMenu();
+            line = scanner.nextInt();
+            scanner.nextLine();
 
-                switch (line) {
-                    case 1:
-                        cadastrarJogosEletronicos();
-                        break;
-                    case 2:
-                        cadastrarJogosTabuleiro();
-                        break;
-                    case 0:
-                        System.out.println("Saindo...");
-                        break;
-                    default:
-                        System.out.println("Opção inválida. Tente novamente.");
-                        exibirMenu();
-                }
-            } while (line != 0);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
+            switch (line) {
+                case 1:
+                    cadastrarJogosEletronicos();
+                    break;
+                case 2:
+                    cadastrarJogosTabuleiro();
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    exibirMenu();
+            }
+        } while (line != 0);
     }
+
 
     private void exibirMenu() {
         System.out.println("=== Menu ===");
