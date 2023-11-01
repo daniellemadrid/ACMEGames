@@ -37,7 +37,7 @@ public class ACMEGames {
             System.setOut(streamSaida);
 
         } catch (Exception e) {
-            System.out.println("Ocorreu um erro: " + e.getMessage());
+            System.out.println(e);
         }
         Locale.setDefault(Locale.ENGLISH);
         entrada.useLocale(Locale.ENGLISH);
