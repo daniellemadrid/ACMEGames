@@ -18,7 +18,7 @@ public class ACMEGames {
     Scanner scanner = new Scanner(System.in);
     private Scanner entrada = null;
     private PrintStream saidaPadrao = System.out;
-    private List<JogoEletronico> jogosEletronicos;
+    private final List<JogoEletronico> jogosEletronicos;
 
     public ACMEGames() {
         this.ludoteca = new Ludoteca();
@@ -35,42 +35,54 @@ public class ACMEGames {
     }
 
     public void executa() {
-        int line;
+        int choice;
         do {
-            cadastrarJogosEletronicos();
-          //  cadastrarJogosTabuleiro();
-          //  mostrarDadosJogo();
-          //  mostrarDadosPorAnoJogo();
-           mostrarDadosJogoEletronicoPorCategoria();
-          //  mostrarSomatorioPrecoFinalJogos();
-          //  mostrarDadosJogoTabuleiroMaiorPrecoFinal();
             exibirMenu();
-            line = scanner.nextInt();
-            scanner.nextLine();
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
-            switch (line) {
+            switch (choice) {
                 case 1:
                     cadastrarJogosEletronicos();
                     break;
                 case 2:
                     cadastrarJogosTabuleiro();
                     break;
+                case 3:
+                    mostrarDadosJogo();
+                    break;
+                case 4:
+                    mostrarDadosPorAnoJogo();
+                    break;
+                case 5:
+                    mostrarDadosJogoEletronicoPorCategoria();
+                    break;
+                case 6:
+                    mostrarSomatorioPrecoFinalJogos();
+                    break;
+                case 7:
+                    mostrarDadosJogoTabuleiroMaiorPrecoFinal();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
-                    exibirMenu();
             }
-        } while (line != 0);
+        } while (choice != 0);
     }
-
 
     private void exibirMenu() {
         System.out.println("=== Menu ===");
         System.out.println("[1] Cadastrar jogos eletrônicos");
         System.out.println("[2] Cadastrar jogos de tabuleiro");
+        System.out.println("[3] Mostrar Dados de um Jogo");
+        System.out.println("[4] Mostrar Dados de um jogo pelo ano");
+        System.out.println("[5] Mostrar dados de jogo por categoria");
+        System.out.println("[6] Mostrar somatório do preço final dos jogos");
+        System.out.println("[7] Jogo de tabuleiro com maior preço final");
         System.out.println("[0] Sair do sistema");
+        System.out.print("Escolha uma opção: ");
     }
 
     private void cadastrarJogosEletronicos() {
@@ -103,7 +115,8 @@ public class ACMEGames {
 
             JogoEletronico jogoEletronico = new JogoEletronico(nome, ano, precoBase, plataforma, categoria);
             if (ludoteca.addJogo(jogoEletronico)) {
-                System.out.println("1:" + jogoEletronico.getNome() + "," + jogoEletronico.calculaPrecoFinal());
+                System.out.println("1:" + jogoEletronico.getNome() + "," + jogoEletronico.calculaPrecoFinal() + "," + jogoEletronico.getCategoria());
+                jogosEletronicos.add(jogoEletronico);
             }
         }
     }
@@ -179,13 +192,15 @@ public class ACMEGames {
         boolean found = false;
 
         for (JogoEletronico jogo : jogosEletronicos) {
-            boolean matchesCategory = jogo.verificaCategoria(categoria);
-            if (matchesCategory) {
+            boolean match = jogo.getCategoria().name().equals(categoria);
+
+            if (match) {
                 found = true;
+                System.out.println("===========================");
                 System.out.println("Nome: " + jogo.getNome());
                 System.out.println("Ano: " + jogo.getAno());
                 System.out.println("Preço Final: " + jogo.calculaPrecoFinal());
-
+                System.out.println("===========================");
             }
         }
 

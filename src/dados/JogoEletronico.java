@@ -45,6 +45,10 @@ public class JogoEletronico extends Jogo {
 
     @Override
     public boolean verificaCategoria(String categoria) {
-        return categoria.equals(this.categoria.toString());
+        if (this.categoria != null && this.categoria.getNome() != null && categoria != null) {
+            return this.categoria.getNome().equals(categoria);
+        } else {
+            return false;
+        }
     }
 }
