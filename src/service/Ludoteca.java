@@ -1,3 +1,8 @@
+package service;
+
+import repository.Iterator;
+import model.Jogo;
+
 import java.util.ArrayList;
 import java.util.List;
 

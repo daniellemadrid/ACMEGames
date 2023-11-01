@@ -1,3 +1,5 @@
+package enums;
+
 public enum Categoria {
     ACT("ACAO"),
     STR("ESTRATEGIA"),

@@ -1,3 +1,10 @@
+package controller;
+
+import enums.Categoria;
+import model.Jogo;
+import model.JogoEletronico;
+import model.JogoTabuleiro;
+import service.Ludoteca;
 
 import java.util.List;
 import java.util.Scanner;
@@ -12,34 +19,39 @@ public class ACMEGames {
     }
 
     public void executa() {
-        int line;
-        do {
-            cadastrarJogosEletronicos();
-            cadastrarJogosTabuleiro();
-            mostrarDadosJogo();
-            mostrarDadosPorAnoJogo();
+//        try (BufferedReader in = new BufferedReader(new FileReader("dadosin.txt"));
+//             BufferedWriter out = new BufferedWriter(new FileWriter("dadosout.txt"))) {
+            int line;
+            do {
+                cadastrarJogosEletronicos();
+                cadastrarJogosTabuleiro();
+                mostrarDadosJogo();
+                mostrarDadosPorAnoJogo();
 //          mostrarDadoJogoEletronicoPorCategoria();
-            mostrarSomatorioPrecoFinalJogos();
+                mostrarSomatorioPrecoFinalJogos();
 //            mostrarDadosJogoTabuleiroMaiorPrecoFinal();
-            exibirMenu();
-            line = scanner.nextInt();
-            scanner.nextLine();
+                exibirMenu();
+                line = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (line) {
-                case 1:
-                    cadastrarJogosEletronicos();
-                    break;
-                case 2:
-                    cadastrarJogosTabuleiro();
-                    break;
-                case 0:
-                    System.out.println("Saindo...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-                    exibirMenu();
-            }
-        } while (line != 0);
+                switch (line) {
+                    case 1:
+                        cadastrarJogosEletronicos();
+                        break;
+                    case 2:
+                        cadastrarJogosTabuleiro();
+                        break;
+                    case 0:
+                        System.out.println("Saindo...");
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                        exibirMenu();
+                }
+            } while (line != 0);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -51,7 +63,7 @@ public class ACMEGames {
     }
 
     private void cadastrarJogosEletronicos() {
-        System.out.println("=== Cadastrar Jogo Eletrônico ===");
+        System.out.println("=== Cadastrar model.Jogo Eletrônico ===");
 
         while (true) {
             System.out.println("Nome (ou -1 para sair): ");
@@ -74,7 +86,7 @@ public class ACMEGames {
             System.out.print("Plataforma: ");
             String plataforma = scanner.nextLine();
 
-            System.out.print("Categoria (ACT, SIM, STR): ");
+            System.out.print("enums.Categoria (ACT, SIM, STR): ");
             String categorias = scanner.nextLine();
             Categoria categoria = Categoria.valueOf(categorias);
 
@@ -121,8 +133,8 @@ public class ACMEGames {
 
 
     private void mostrarDadosJogo() {
-        System.out.println("=== Mostrar Dados de um Jogo ===");
-        System.out.print("Nome do Jogo: ");
+        System.out.println("=== Mostrar Dados de um model.Jogo ===");
+        System.out.print("Nome do model.Jogo: ");
         String nome = scanner.next();
 
         Jogo jogo = ludoteca.consultaPorNome(nome);
@@ -135,8 +147,8 @@ public class ACMEGames {
     }
 
     public void mostrarDadosPorAnoJogo() {
-        System.out.println("=== Mostrar Dados de um Jogo pelo ano ===");
-        System.out.print("Ano do Jogo: ");
+        System.out.println("=== Mostrar Dados de um model.Jogo pelo ano ===");
+        System.out.print("Ano do model.Jogo: ");
         int ano = scanner.nextInt();
         List<Jogo> jogosDoAno = ludoteca.consultaPorAno(ano);
 
@@ -151,9 +163,9 @@ public class ACMEGames {
 
 //    public void  mostrarDadosJogoEletronicoPorCategoria(){
 //        System.out.println("=== Mostrar dados de jogo por categoria ===");
-//        System.out.println("Categoria do jogo: ");
+//        System.out.println("enums.Categoria do jogo: ");
 //
-//        JogoEletronico jogoEletronico = new JogoEletronico(nome, ano, precoBase, plataforma, categoria);
+//        model.JogoEletronico jogoEletronico = new model.JogoEletronico(nome, ano, precoBase, plataforma, categoria);
 //
 //    }
 
@@ -172,13 +184,13 @@ public class ACMEGames {
     }
 
 //    public void  mostrarDadosJogoTabuleiroMaiorPrecoFinal(){
-//        System.out.println("=== Jogo de tabuleiro com maior preço final ===");
-//        List<Jogo> jogos = ludoteca.getJogos();
+//        System.out.println("=== model.Jogo de tabuleiro com maior preço final ===");
+//        List<model.Jogo> jogos = ludoteca.getJogos();
 //        if (jogos.isEmpty()) {
 //            System.out.println("7:Nenhum jogo encontrado.");
 //        }else{
 //            double somatorio = 0;
-//            for (Jogo jogo : jogos) {
+//            for (model.Jogo jogo : jogos) {
 //                somatorio += jogo.calculaPrecoFinal();
 //            }
 //            System.out.println("7:");

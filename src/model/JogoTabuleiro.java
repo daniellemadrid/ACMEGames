@@ -1,3 +1,5 @@
+package model;
+
 public class JogoTabuleiro extends Jogo {
     private int numeroPecas;
 

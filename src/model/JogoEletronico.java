@@ -1,4 +1,8 @@
-public class JogoEletronico extends Jogo{
+package model;
+
+import enums.Categoria;
+
+public class JogoEletronico extends Jogo {
     private String plataforma;
     private Categoria categoria;
 

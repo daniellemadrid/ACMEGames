@@ -1,3 +1,5 @@
+package model;
+
 public abstract class Jogo {
     private String nome;
     private int ano;
