@@ -23,33 +23,33 @@ public class ACMEGames {
         try {
             BufferedReader streamEntrada = new BufferedReader(new FileReader("dadosIn.txt"));
             entrada = new Scanner(streamEntrada);
-            PrintStream streamSaida = new PrintStream(new File("dadosOut.txt"), Charset.forName("UTF-8"));
+            saidaPadrao = new PrintStream(new File("dadosOut.txt"), Charset.forName("UTF-8"));
+            scanner = new Scanner(System.in);
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("problema de leitura de arquivo"+e);
         }
     }
-
     public void executa() {
         int line;
         do {
-            cadastrarJogosEletronicos();
-            cadastrarJogosTabuleiro();
-            mostrarDadosJogo();
-          mostrarDadosPorAnoJogo();
          // mostrarDadoJogoEletronicoPorCategoria();
-            mostrarSomatorioPrecoFinalJogos();
+//            mostrarSomatorioPrecoFinalJogos();
         //  mostrarDadosJogoTabuleiroMaiorPrecoFinal();
-            exibirMenu();
+           exibirMenu();
             line = scanner.nextInt();
             scanner.nextLine();
 
             switch (line) {
                 case 1:
                     cadastrarJogosEletronicos();
+//                    mostrarDadosJogo();
+//                    mostrarDadosPorAnoJogo();
                     break;
                 case 2:
                     cadastrarJogosTabuleiro();
+//                    mostrarDadosJogo();
+//                    mostrarDadosPorAnoJogo();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -122,7 +122,6 @@ public class ACMEGames {
 
             System.out.print("Ano: ");
             int ano = scanner.nextInt();
-            scanner.nextLine();
 
             System.out.print("Preço base: ");
             double precoBase = scanner.nextDouble();
@@ -140,8 +139,8 @@ public class ACMEGames {
 
 
     private void mostrarDadosJogo() {
-        System.out.println("=== Mostrar Dados de um dados.Jogo ===");
-        System.out.print("Nome do dados.Jogo: ");
+        System.out.println("=== Mostrar Dados de um Jogo ===");
+        System.out.print("Nome do Jogo: ");
         String nome = scanner.next();
 
         Jogo jogo = ludoteca.consultaPorNome(nome);
@@ -154,8 +153,8 @@ public class ACMEGames {
     }
 
     public void mostrarDadosPorAnoJogo() {
-        System.out.println("=== Mostrar Dados de um dados.Jogo pelo ano ===");
-        System.out.print("Ano do dados.Jogo: ");
+        System.out.println("=== Mostrar Dados de um jogo pelo ano ===");
+        System.out.print("Ano do Jogo: ");
         int ano = scanner.nextInt();
         List<Jogo> jogosDoAno = ludoteca.consultaPorAno(ano);
 

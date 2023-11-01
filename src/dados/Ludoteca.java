@@ -1,8 +1,5 @@
 package dados;
 
-import dados.Iterator;
-import dados.Jogo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class Ludoteca implements Iterator<Jogo> {
 
     public Jogo consultaPorNome(String nome) {
         for (Jogo jogo : jogos) {
-            if (jogo.getNome().equals(nome)) {
+            if (jogo.getNome().equalsIgnoreCase(nome)) {
                 return jogo;
             }
         }
