@@ -1,5 +1,4 @@
-1:Civilization V,R$ 321.27
-1:God of War Ragnarok,R$ 236.65
-1:The Sims 4,R$ 71.54
-1:Super Mario Odissey,R$ 318.88
-
+1:Resident Evil;324.87
+1:Read Dead;168.87
+1:The Sims 4;71.54
+1:Super Mario Odissey;318.88

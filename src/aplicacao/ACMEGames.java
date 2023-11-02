@@ -7,11 +7,8 @@ import dados.JogoTabuleiro;
 import dados.Ludoteca;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class ACMEGames {
@@ -202,7 +199,7 @@ public class ACMEGames {
     private void mostrarDadosJogo() {
         System.out.println("=== Mostrar Dados de um Jogo ===");
         System.out.print("Nome do Jogo: ");
-        String nome = scanner.nextLine(); // Read the entire line of input.
+        String nome = scanner.next();
 
         Jogo jogo = ludoteca.consultaPorNome(nome);
 
