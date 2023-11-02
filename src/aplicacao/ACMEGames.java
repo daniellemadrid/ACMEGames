@@ -25,25 +25,57 @@ public class ACMEGames {
     public ACMEGames() {
         this.ludoteca = new Ludoteca();
         this.jogosEletronicos = new ArrayList<>();
-        lerArquivos();
     }
 
     private void lerArquivos() {
+        List<JogoEletronico> jogosEletronicos = new ArrayList<>();
         try {
-            BufferedReader streamEntrada = new BufferedReader(new FileReader("dadosIn.txt"));
-            entrada = new Scanner(streamEntrada);
-            entrada.useDelimiter("[;\n\r]");
-            PrintStream streamSaida = new PrintStream(new File("dadosOut.txt"), StandardCharsets.UTF_8);
-            System.setOut(streamSaida);
+            BufferedReader streamEntrada = new BufferedReader(new FileReader("src/dadosIn.txt"));
+            String line;
+            while ((line = streamEntrada.readLine()) != null) {
+                String[] parts = line.split(";");
 
+                if (parts.length == 5) {
+                    String nome = parts[0];
+                    int ano = Integer.parseInt(parts[1]);
+                    double precoBase = Double.parseDouble(parts[2]);
+                    String plataforma = parts[3];
+                    String categoriaNome = parts[4];
+
+                    Categoria categoria = null;
+                    for (Categoria c : Categoria.values()) {
+                        if (c.getNome().equals(categoriaNome)) {
+                            categoria = c;
+                            break;
+                        }
+                    }
+
+                    if (categoria == null) {
+                        System.out.println("Invalid categoria: " + categoriaNome);
+                        continue;
+                    }
+
+                    JogoEletronico jogo = new JogoEletronico(nome, ano, precoBase, plataforma, categoria);
+                    jogosEletronicos.add(jogo);
+                    System.out.println("Jogo eletrônico cadastrado: " + jogo.getNome());
+                    System.out.println("Categoria: " + jogo.getCategoria().getNome());
+                    System.out.println("Plataforma: " + jogo.getPlataforma());
+                    System.out.println("==================================================");
+                } else {
+                    System.out.println("Invalid data: " + line);
+                }
+            }
+            streamEntrada.close();
         } catch (Exception e) {
             System.out.println(e);
         }
-        Locale.setDefault(Locale.ENGLISH);
-        entrada.useLocale(Locale.ENGLISH);
     }
 
+
+
     public void executa() {
+        lerArquivos();
+
         int choice;
         do {
             exibirMenu();

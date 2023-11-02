@@ -13,6 +13,10 @@ public class JogoEletronico extends Jogo {
         return categoria;
     }
 
+    public String getPlataforma() {
+        return plataforma;
+    }
+
     @Override
     public double calculaPrecoFinal() {
         double percentual = 0.0;
