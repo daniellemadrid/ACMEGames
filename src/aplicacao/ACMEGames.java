@@ -56,7 +56,7 @@ public class ACMEGames {
                     }
 
                     JogoEletronico jogo = new JogoEletronico(nome, ano, precoBase, plataforma, categoria);
-                    jogosEletronicos.add(jogo);
+                    ludoteca.addJogo(jogo);
                     System.out.println("Jogo eletrônico cadastrado: " + jogo.getNome());
                     System.out.println("Categoria: " + jogo.getCategoria().getNome());
                     System.out.println("Plataforma: " + jogo.getPlataforma());
@@ -202,7 +202,7 @@ public class ACMEGames {
     private void mostrarDadosJogo() {
         System.out.println("=== Mostrar Dados de um Jogo ===");
         System.out.print("Nome do Jogo: ");
-        String nome = scanner.next();
+        String nome = scanner.nextLine(); // Read the entire line of input.
 
         Jogo jogo = ludoteca.consultaPorNome(nome);
 
@@ -212,6 +212,8 @@ public class ACMEGames {
             System.out.println("3:Nome inexistente.");
         }
     }
+
+
 
     public void mostrarDadosPorAnoJogo() {
         System.out.println("=== Mostrar Dados de um jogo pelo ano ===");
